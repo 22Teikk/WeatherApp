@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="90dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="8dp"
+    android:elevation="3dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/background_card"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_margin="8dp"
+            android:id="@+id/textView8"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextViea" />
+
+        <ImageView
+            android:id="@+id/imgWeather"
+            android:layout_margin="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/cloudy_sunny" />
+
+        <TextView
+            android:id="@+id/text9"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lksdjf" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
