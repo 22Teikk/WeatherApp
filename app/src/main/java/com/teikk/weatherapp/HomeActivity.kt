@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.teikk.weatherapp.Adapter.WeatherFutureAdapter
 import com.teikk.weatherapp.Models.Weather
 import com.teikk.weatherapp.Models.WeatherX
@@ -34,10 +36,40 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Constant.Companion.HideKeyboard.setupUI(binding.root, this)
         setUpRecyclerView()
         setUpViewModel()
         getCurrentWeatherInfo()
         getForecaseInfo()
+        handleSearchView()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun handleSearchView() {
+        binding.searchCity.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query!="") {
+                    weatherViewModel.getWeather(query.toString())
+                    weatherViewModel.getForecast(query.toString())
+                    getCurrentWeatherInfo()
+                    getForecaseInfo()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        binding.searchCity.setOnCloseListener {
+            weatherViewModel.getWeather("hanoi")
+            weatherViewModel.getForecast("hanoi")
+            getCurrentWeatherInfo()
+            getForecaseInfo()
+            true
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -90,11 +122,11 @@ class HomeActivity : AppCompatActivity() {
                                 .load(Constant.urlImage(it.weather[0].icon))
                                 .into(binding.imgWeather)
                             txtTemperature.text =
-                                Constant.kelvinToCelsius(it.main.temp).toString() + "°C"
+                                String.format("%.2f",Constant.kelvinToCelsius(it.main.temp)) + "°C"
                             txtHL.text =
-                                "H: " + Constant.kelvinToCelsius(it.main.temp_max) + " L: " + Constant.kelvinToCelsius(
+                                "H: " + String.format("%.2f",Constant.kelvinToCelsius(it.main.temp_max)) + " L: " + String.format("%.2f",Constant.kelvinToCelsius(
                                     it.main.temp_min
-                                )
+                                ))
                             txtCloud.text = it.clouds.all.toString() + "%"
                             txtHumidity.text = it.main.humidity.toString() + "%"
                             txtWinSpeed.text = it.wind.speed.toString() + "m/s"
@@ -107,6 +139,9 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 is Resource.Error -> {
+                    respone.message?.let { message ->
+                        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                    }
                     hideProgressBar()
                 }
             }
