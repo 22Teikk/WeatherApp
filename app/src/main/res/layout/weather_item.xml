@@ -5,19 +5,19 @@
     app:cardCornerRadius="20dp"
     android:layout_margin="8dp"
     android:elevation="3dp"
-    android:layout_height="wrap_content">
+    android:layout_height="150dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@drawable/background_card"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center|top"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txtDes"
             android:textSize="14sp"
             android:layout_margin="8dp"
-            android:id="@+id/textView8"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:layout_width="match_parent"
@@ -26,17 +26,16 @@
 
         <ImageView
             android:id="@+id/imgWeather"
-            android:layout_margin="8dp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@drawable/cloudy_sunny" />
 
         <TextView
-            android:id="@+id/text9"
+            android:id="@+id/txtMain"
             android:textSize="18sp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:layout_margin="8dp"
+            android:maxLines="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="lksdjf" />

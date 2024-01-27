@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class Constant {
@@ -14,11 +16,12 @@ class Constant {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun convertTimeZone(offsetSeconds: Int): String {
-            val instant = Instant.now().plusSeconds(offsetSeconds.toLong())
-            val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-
+            val sourceZoneId = ZoneId.ofOffset("GMT", ZoneOffset.ofTotalSeconds(offsetSeconds))
+            val sourceDateTime = ZonedDateTime.now(sourceZoneId)
+            val vietnamZoneId = ZoneId.of("Asia/Ho_Chi_Minh")
+            val vietnamDateTime = sourceDateTime.withZoneSameInstant(vietnamZoneId)
             val formatter = DateTimeFormatter.ofPattern("EEE MMM dd| hh:mm a")
-            return localDateTime.format(formatter)
+            return vietnamDateTime.format(formatter)
         }
 
         fun kelvinToCelsius(kelvin: Double): Double {

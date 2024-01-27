@@ -1,5 +1,6 @@
 package com.teikk.weatherapp.API
 
+import com.teikk.weatherapp.Models.Hour.Forecast
 import com.teikk.weatherapp.Models.Weather
 import com.teikk.weatherapp.Utils.Constant.Companion.API_KEY
 import retrofit2.Response
@@ -17,14 +18,15 @@ interface WeatherAPI {
         cityName: String = "hanoi",
         @Query("appid")
         apiKey: String = API_KEY
-    ): Response<Weather>}
+    ): Response<Weather>
 
 //    api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
 //    5 day / 3 hour forecast data
-//    @GET("data/2.5/forecast")
-//    suspend fun getForecastByCity(
-//        @Query("q")
-//        cityName: String = "hanoi",
-//        @Query("appid")
-//        apiKey: String = API_KEY
-//    ): Response<Forecast>}
+    @GET("data/2.5/forecast")
+    suspend fun getForecastByCity(
+        @Query("q")
+        cityName: String = "hanoi",
+        @Query("appid")
+        apiKey: String = API_KEY
+    ): Response<Forecast>
+}
